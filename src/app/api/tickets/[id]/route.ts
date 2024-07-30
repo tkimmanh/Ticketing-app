@@ -62,3 +62,14 @@ export async function PUT(request: NextRequest, { params }: Props) {
     });
   }
 }
+
+export async function DELETE(request: NextRequest, { params }: Props) {
+  try {
+    await prisma.ticket.delete({ where: { id: parseInt(params.id) } });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json("Something went wrong", {
+      status: 500,
+    });
+  }
+}

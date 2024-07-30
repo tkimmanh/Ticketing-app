@@ -1,6 +1,6 @@
 import TicketsPriorityDot from "@/components/tickets-priority-dot";
 import TicketStatus from "@/components/ticktets-status";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -20,6 +20,14 @@ interface Props {
 const DataTable = ({ tickets }: Props) => {
   return (
     <div className="w-full mt-5 ">
+      <Link
+        href="/tickets/new"
+        className={`mb-5 ${buttonVariants({
+          variant: "default",
+        })}`}
+      >
+        New Ticket
+      </Link>
       <div className="rounded-sm sm:border">
         <Table>
           <TableHeader>
@@ -28,14 +36,15 @@ const DataTable = ({ tickets }: Props) => {
               <TableHead>Status</TableHead>
               <TableHead>Priority</TableHead>
               <TableHead>Created At</TableHead>
-              <TableHead>Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {tickets
               ? tickets.map((ticket) => (
                   <TableRow key={ticket.id} data-href="/">
-                    <TableCell>{ticket.title}</TableCell>
+                    <TableCell>
+                      <Link href={`/tickets/${ticket.id}`}>{ticket.title}</Link>
+                    </TableCell>
                     <TableCell>
                       <TicketStatus status={ticket.status}></TicketStatus>
                     </TableCell>
@@ -55,9 +64,6 @@ const DataTable = ({ tickets }: Props) => {
                         minute: "2-digit",
                         hour12: true,
                       })}
-                    </TableCell>
-                    <TableCell>
-                      <Link href={`/tickets/edit/${ticket.id}`}>Update</Link>
                     </TableCell>
                   </TableRow>
                 ))
